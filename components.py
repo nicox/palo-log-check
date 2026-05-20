@@ -117,7 +117,10 @@ def row_prefill(df: pd.DataFrame, selected_rows: list, col_map: dict) -> dict:
     """Extract prefill dict from a selected dataframe row."""
     if not selected_rows:
         return {}
-    row = df.iloc[selected_rows[0]]
+    idx = selected_rows[0]
+    if idx >= len(df):
+        return {}
+    row = df.iloc[idx]
     result = {}
     for prefill_key, col_name in col_map.items():
         val = row.get(col_name, "")
