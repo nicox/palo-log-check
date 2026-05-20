@@ -1,0 +1,21 @@
+{
+  "Management": {
+    "description": "Server management network",
+    "subnets": [
+      "10.1.0.0/24",
+      "10.1.1.0/24"
+    ]
+  },
+  "Clients": {
+    "description": "End-user client network",
+    "subnets": [
+      "192.168.10.0/23"
+    ]
+  },
+  "DMZ": {
+    "description": "Demilitarized zone",
+    "subnets": [
+      "172.16.0.0/24"
+    ]
+  }
+}

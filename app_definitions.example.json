@@ -1,0 +1,27 @@
+{
+  "My Application": {
+    "description": "Human-readable description of what this application does",
+    "rules": [
+      {
+        "dst_ports": ["443", "8443"],
+        "applications": ["ssl"],
+        "protocols": ["tcp"],
+        "dst_ips": ["10.0.0.1", "10.0.1.0/24"]
+      },
+      {
+        "src_ips": ["192.168.1.0/24"],
+        "dst_ports": ["80"]
+      }
+    ]
+  },
+  "DNS": {
+    "description": "Internal DNS servers",
+    "rules": [
+      {
+        "dst_ports": ["53"],
+        "applications": ["dns-base"],
+        "protocols": ["udp"]
+      }
+    ]
+  }
+}
