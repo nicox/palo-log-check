@@ -48,7 +48,8 @@ def render(con, dw, has_data):
                    Action, Bytes, "Session End Reason"
             FROM traffic_logs
             WHERE Rule='{safe(sel_rule)}'{dw}
-            ORDER BY "Receive Time" DESC LIMIT 500
+            ORDER BY "Receive Time" DESC, "Source address", "Destination address",
+                     "Destination Port" LIMIT 500
         """)
         st.caption("Click a row to pre-fill Quick Classify below.")
         rule_sel = st.dataframe(rd, use_container_width=True, hide_index=True,

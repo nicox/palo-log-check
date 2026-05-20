@@ -48,7 +48,7 @@ def render(con, dw, has_data):
                SUM(Packets) AS Packets
         FROM traffic_logs WHERE 1=1{dw}
         GROUP BY "Source address", "Destination address", Application
-        ORDER BY Bytes DESC LIMIT 500
+        ORDER BY Bytes DESC, "Source address", "Destination address", Application LIMIT 500
     """)
     tt_sel = st.dataframe(agg, use_container_width=True, hide_index=True,
                           selection_mode="single-row", on_select="rerun",

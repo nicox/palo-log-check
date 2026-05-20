@@ -64,7 +64,8 @@ def render(con, dw, has_data):
                "IP Protocol", Action, Rule, "Source Zone", "Destination Zone"
         FROM traffic_logs
         WHERE {DENY}{dw}{src_cond}
-        ORDER BY "Receive Time" DESC LIMIT 500
+        ORDER BY "Receive Time" DESC, "Source address", "Destination address",
+                 "Destination Port" LIMIT 500
     """)
     blk_sel = st.dataframe(detail, use_container_width=True, hide_index=True,
                            selection_mode="single-row", on_select="rerun",
