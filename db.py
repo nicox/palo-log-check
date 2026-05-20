@@ -54,9 +54,17 @@ def total_rows(con) -> int:
 def get_ts_expr(con) -> str:
     """Return a SQL expression that yields 'Receive Time' as TIMESTAMP.
     DuckDB's read_csv_auto may already parse the column as TIMESTAMP, in which
-    case TRY_STRPTIME (which requires VARCHAR) would fail."""
+    case TRY_STRPTIME (which requires VARCHAR) would fail.
+
+    Detection is done in two stages:
+    1. Metadata check via duckdb_columns() — fast but the type name varies
+       across DuckDB versions (TIMESTAMP, TIMESTAMP_S, TIMESTAMP WITH TIME ZONE…).
+    2. Runtime probe — actually execute TRY_STRPTIME on a sample row; if DuckDB
+       raises a BinderException the column is already a TIMESTAMP, so return the
+       bare column reference instead."""
     if not logs_exist(con):
         return '"Receive Time"'
+    # Stage 1: metadata
     try:
         row = con.execute("""
             SELECT data_type FROM duckdb_columns()
@@ -66,7 +74,16 @@ def get_ts_expr(con) -> str:
             return '"Receive Time"'
     except Exception:
         pass
-    return "TRY_STRPTIME(\"Receive Time\", '%Y/%m/%d %H:%M:%S')"
+    # Stage 2: runtime probe — TRY_STRPTIME requires VARCHAR; it raises a
+    # BinderException if the column is already a TIMESTAMP type.
+    try:
+        con.execute(
+            "SELECT TRY_STRPTIME(\"Receive Time\", '%Y/%m/%d %H:%M:%S') "
+            "FROM traffic_logs LIMIT 1"
+        )
+        return "TRY_STRPTIME(\"Receive Time\", '%Y/%m/%d %H:%M:%S')"
+    except Exception:
+        return '"Receive Time"'
 
 
 def get_url_cols(con) -> dict:
