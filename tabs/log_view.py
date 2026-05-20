@@ -140,7 +140,8 @@ def render(con, dw, has_data):
             {_url_outer}
         FROM base
         WHERE 1=1 {cls_filter}
-        ORDER BY "Receive Time" DESC
+        ORDER BY "Receive Time" DESC, "Source address", "Destination address",
+                 "Source Port", "Destination Port", Application
         LIMIT {int(limit)}
     """)
 
