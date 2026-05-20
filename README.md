@@ -16,10 +16,27 @@ loading them fully into RAM.
 - **Flow Visualization** — Sankey diagram (source → application → destination) with flow detail table and log examples
 - **VLANs** — define VLANs by CIDR subnet; use as a global traffic filter across all tabs
 
-## Quick start
+## Installation
+
+**Prerequisites:** Python 3.10 or newer.
 
 ```bash
+# 1. Clone the repository
+git clone <repo-url>
+cd palo-log-check
+
+# 2. Install dependencies
 pip install -r requirements.txt
+
+# 3. (Optional) pre-create config files from the examples
+#    The app also creates them automatically on first save via the UI
+cp app_definitions.example.json app_definitions.json
+cp vlans.example.json vlans.json
+```
+
+## Running the app
+
+```bash
 streamlit run app.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
 ```
 
