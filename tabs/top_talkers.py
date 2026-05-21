@@ -30,7 +30,7 @@ def render(con, dw, has_data):
         fig = px.bar(df2, x="val", y="grp", orientation="h", title=title,
                      labels={"val": metric, "grp": col})
         fig.update_layout(yaxis=dict(autorange="reversed"), margin=dict(l=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     c1, c2 = st.columns(2)
     with c1: top_chart("Source address",      f"Top {top_n} Sources by {metric}")
@@ -50,7 +50,7 @@ def render(con, dw, has_data):
         GROUP BY "Source address", "Destination address", Application
         ORDER BY Bytes DESC, "Source address", "Destination address", Application LIMIT 500
     """)
-    tt_sel = st.dataframe(agg, use_container_width=True, hide_index=True,
+    tt_sel = st.dataframe(agg, width="stretch", hide_index=True,
                           selection_mode="single-row", on_select="rerun",
                           key="tt_table")
     tt_prefill = row_prefill(agg, tt_sel.selection.rows, {

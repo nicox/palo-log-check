@@ -33,7 +33,7 @@ def render(con, dw, ts_expr, has_data):
             GROUP BY Action ORDER BY cnt DESC
         """)
         fig = px.pie(df_a, names="Action", values="cnt", title="Action Distribution")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with col2:
         df_b = q(con, f"""
@@ -44,7 +44,7 @@ def render(con, dw, ts_expr, has_data):
         fig = px.bar(df_b, x="Bytes", y="Application", orientation="h",
                      title="Top 10 Applications by Bytes")
         fig.update_layout(yaxis=dict(autorange="reversed"))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     ts_df = q(con, f"""
         SELECT TIME_BUCKET(INTERVAL '1 minute', {ts_expr}) AS t,
@@ -56,7 +56,7 @@ def render(con, dw, ts_expr, has_data):
     if not ts_df.empty:
         fig = px.area(ts_df, x="t", y="Bytes", title="Bytes per Minute",
                       labels={"t": "Time"})
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.subheader("Session End Reasons")
     df_r = q(con, f"""
@@ -64,5 +64,5 @@ def render(con, dw, ts_expr, has_data):
         FROM traffic_logs WHERE 1=1{dw}
         GROUP BY Reason ORDER BY Count DESC
     """)
-    st.dataframe(df_r, use_container_width=True, hide_index=True)
+    st.dataframe(df_r, width="stretch", hide_index=True)
     quick_classify_panel("overview")

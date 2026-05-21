@@ -48,7 +48,7 @@ def render(con, dw, has_data):
                      title="Sessions by Classification",
                      hole=0.4,
                      color_discrete_sequence=px.colors.qualitative.Safe)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # ── Filters ───────────────────────────────────────────────────────────
     st.subheader("Filter & Browse")
@@ -153,7 +153,7 @@ def render(con, dw, has_data):
     )
 
     lv_sel = st.dataframe(
-        lv_df, use_container_width=True, hide_index=True,
+        lv_df, width="stretch", hide_index=True,
         selection_mode="single-row", on_select="rerun",
         key="lv_table",
         column_config={

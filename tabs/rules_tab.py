@@ -26,16 +26,16 @@ def render(con, dw, has_data):
         fig = px.bar(rule_df.head(20), x="Sessions", y="Rule", orientation="h",
                      title="Top 20 Rules by Hit Count")
         fig.update_layout(yaxis=dict(autorange="reversed"))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     with c2:
         fig = px.bar(rule_df.sort_values("Bytes", ascending=False).head(20),
                      x="Bytes", y="Rule", orientation="h",
                      title="Top 20 Rules by Bytes")
         fig.update_layout(yaxis=dict(autorange="reversed"))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.subheader("Rule Summary")
-    st.dataframe(rule_df, use_container_width=True, hide_index=True)
+    st.dataframe(rule_df, width="stretch", hide_index=True)
 
     st.subheader("Drill into a Rule")
     rule_names = [""] + sorted(rule_df["Rule"].dropna().tolist())
@@ -52,7 +52,7 @@ def render(con, dw, has_data):
                      "Destination Port" LIMIT 500
         """)
         st.caption("Click a row to pre-fill Quick Classify below.")
-        rule_sel = st.dataframe(rd, use_container_width=True, hide_index=True,
+        rule_sel = st.dataframe(rd, width="stretch", hide_index=True,
                                 selection_mode="single-row", on_select="rerun",
                                 key="rule_table")
         rule_prefill = row_prefill(rd, rule_sel.selection.rows, {

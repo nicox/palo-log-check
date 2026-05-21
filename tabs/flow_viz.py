@@ -246,7 +246,7 @@ def render(con, dw, has_data):
             """)
 
             flow_sel = st.dataframe(
-                flow_trips, use_container_width=True, hide_index=True,
+                flow_trips, width="stretch", hide_index=True,
                 selection_mode="single-row", on_select="rerun",
                 key="flow_detail_table",
             )
@@ -283,6 +283,6 @@ def render(con, dw, has_data):
                     ORDER BY "Receive Time" DESC
                     LIMIT 20
                 """)
-                st.dataframe(sample_logs, use_container_width=True, hide_index=True)
+                st.dataframe(sample_logs, width="stretch", hide_index=True)
         else:
             st.warning("Not enough overlapping data to draw a Sankey diagram.")

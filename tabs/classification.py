@@ -184,7 +184,7 @@ def render(con, dw, has_data):
                 for _, row in _cls_raw.iterrows()
             ]
             res_df = pd.DataFrame(results).sort_values("Bytes", ascending=False)
-            st.dataframe(res_df, use_container_width=True, hide_index=True)
+            st.dataframe(res_df, width="stretch", hide_index=True)
 
             drill = st.selectbox("Drill into classified app",
                                  [""] + list(app_defs.keys()), key="cls_drill")
@@ -197,6 +197,6 @@ def render(con, dw, has_data):
                     FROM traffic_logs WHERE ({expr}){dw}
                     ORDER BY Bytes DESC LIMIT 500
                 """)
-                st.dataframe(detail, use_container_width=True, hide_index=True)
+                st.dataframe(detail, width="stretch", hide_index=True)
     elif has_data:
         st.info("No application definitions yet — add one above.")

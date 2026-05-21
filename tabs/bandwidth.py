@@ -54,7 +54,7 @@ def render(con, dw, ts_expr, has_data):
         """)
         fig = px.area(ts, x="t", y="Bytes", color="grp",
                       title=f"Bytes by {grp_by}", labels={"t": "Time", "grp": grp_by})
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     c1, c2 = st.columns(2)
     with c1:
@@ -67,7 +67,7 @@ def render(con, dw, ts_expr, has_data):
         """)
         fig = px.line(sr, x="t", y=["Bytes Sent", "Bytes Received"],
                       title="Bytes Sent vs Received", labels={"t": "Time"})
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with c2:
         proto = q(con, f"""
@@ -76,6 +76,6 @@ def render(con, dw, ts_expr, has_data):
             GROUP BY Protocol ORDER BY Bytes DESC
         """)
         fig = px.pie(proto, names="Protocol", values="Bytes", title="Bytes by Protocol")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     quick_classify_panel("bandwidth")

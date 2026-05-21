@@ -38,7 +38,7 @@ def render(con, dw, has_data):
                          title="Top Blocked Sources",
                          labels={"cnt": "Sessions", "src": "Source IP"})
             fig.update_layout(yaxis=dict(autorange="reversed"))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     with col2:
         df_ba = q(con, f"""
@@ -51,7 +51,7 @@ def render(con, dw, has_data):
                          title="Top Blocked Applications",
                          labels={"cnt": "Sessions"})
             fig.update_layout(yaxis=dict(autorange="reversed"))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     st.subheader("Blocked Traffic Table")
     st.caption("Click a row to pre-fill Quick Classify below.")
@@ -67,7 +67,7 @@ def render(con, dw, has_data):
         ORDER BY "Receive Time" DESC, "Source address", "Destination address",
                  "Destination Port" LIMIT 500
     """)
-    blk_sel = st.dataframe(detail, use_container_width=True, hide_index=True,
+    blk_sel = st.dataframe(detail, width="stretch", hide_index=True,
                            selection_mode="single-row", on_select="rerun",
                            key="blk_table")
     blk_prefill = row_prefill(detail, blk_sel.selection.rows, {

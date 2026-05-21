@@ -196,6 +196,6 @@ def render(con, dw, has_data):
                 })
             if vlan_rows:
                 vdf = pd.DataFrame(vlan_rows).sort_values("Bytes", ascending=False)
-                st.dataframe(vdf, use_container_width=True, hide_index=True)
+                st.dataframe(vdf, width="stretch", hide_index=True)
     else:
         st.info("No VLANs defined yet — add one above or import from a file.")
